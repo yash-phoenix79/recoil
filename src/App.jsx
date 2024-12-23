@@ -1,4 +1,4 @@
-import { useRecoilValue, useRecoilState } from 'recoil'
+import { useRecoilValue, useRecoilState, useRecoilStateLoadable } from 'recoil'
 import './App.css'
 import { jobsAtom, messagingAtom, networkAtom, notificationsAtom, todosAtomFamily, totalNotificationsSelector } from './atoms'
 
@@ -32,12 +32,22 @@ function App() {
 }
 
 function Todos({id}){
-  const todo=useRecoilValue(todosAtomFamily(id))
-  return (
-    <div>
-      {todo.value}
-    </div>
-  )
+  // const todo=useRecoilValue(todosAtomFamily(id))
+  const [todo,setTodo]=useRecoilStateLoadable(todosAtomFamily(id))
+  if(todo.state==='loading'){
+    return(
+      <div>
+        Loading ...
+      </div>
+    )
+  }else if(todo.state==='hasValue'){
+    return (
+      <div>
+        {todo.contents.value}
+      </div>
+    )
+  }
+  
 }
 
 export default App
