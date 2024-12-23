@@ -1,6 +1,6 @@
 import { useRecoilValue, useRecoilState } from 'recoil'
 import './App.css'
-import { jobsAtom, messagingAtom, networkAtom, notificationsAtom, totalNotificationsSelector } from './atoms'
+import { jobsAtom, messagingAtom, networkAtom, notificationsAtom, todosAtomFamily, totalNotificationsSelector } from './atoms'
 
 function App() {
 
@@ -24,7 +24,19 @@ function App() {
 
     <button>Me ({totalCount})</button>
 
+    <Todos id={1}/>
+    <Todos id={2}/>
+
    </>
+  )
+}
+
+function Todos({id}){
+  const todo=useRecoilValue(todosAtomFamily(id))
+  return (
+    <div>
+      {todo.value}
+    </div>
   )
 }
 

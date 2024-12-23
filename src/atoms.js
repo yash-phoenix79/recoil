@@ -1,4 +1,4 @@
-import {atom, selector} from 'recoil'
+import {atom, atomFamily, selector} from 'recoil'
 
 
 export const networkAtom = atom({
@@ -29,5 +29,39 @@ export const totalNotificationsSelector = selector({
         const notificationsAtomCount = get(notificationsAtom);
         const messagingAtomCount = get(messagingAtom);
         return netWorkAtomCount + jobsAtomCount + notificationsAtomCount + messagingAtomCount;
+    }
+})
+
+export const asyncCount = atom({
+    key: "asyncNetworkCount",
+    default: selector({
+        key: "asyncNetworkCountSelector",
+        get: async()=>{
+            //dummy backend request
+            const res = await axios.get('///');
+            return res.data;
+        }
+    })
+})
+
+const TODOS=[
+    {
+        key: 1,
+        value: 'first'
+    },
+    {
+        key: 2,
+        value: 'second'
+    },
+    {
+        key: 3,
+        value: 'third'
+    }
+]
+
+export const todosAtomFamily = atomFamily({
+    key: 'todosAtomFamily',
+    default: id=>{
+        return TODOS.find(x => x.key === id)
     }
 })
